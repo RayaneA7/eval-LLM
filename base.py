@@ -1,6 +1,7 @@
 import numpy as np
 
 
+
 class BaseScoreEvaluator:
     fields = []
 
@@ -15,3 +16,4 @@ class BaseScoreEvaluator:
 
     def compute_mean(self, scores):
         return {k: np.mean(scores[k]) for k in self.fields}
+

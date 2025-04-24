@@ -3,27 +3,13 @@ from .rouge import RougeScoreEvaluator
 from .sacrebleu import BleuScoreEvaluator
 from .meteor import MeteorScoreEvaluator
 from .bertscore import BertScoreEvaluator
+from .utils import get_scorers
 
 
 class CollectionScoreEvaluator(BaseScoreEvaluator):
     def __init__(self, metrics_names, **kwargs):
         super().__init__("Collection")
-        self.scorers = self.get_scorers(metrics_names, **kwargs)
-
-    def get_scorers(self, metrics_names, **kwargs):
-        scorers = []
-        for metric_name in metrics_names:
-            if metric_name == "rouge":
-                scorers.append(RougeScoreEvaluator(**kwargs))
-            elif metric_name == "bleu":
-                scorers.append(BleuScoreEvaluator(**kwargs))
-            elif metric_name == "meteor":
-                scorers.append(MeteorScoreEvaluator(**kwargs))
-            elif metric_name == "bertscore":
-                scorers.append(BertScoreEvaluator(**kwargs))
-            else:
-                raise ValueError(f"Unknown metric: {metric_name}")
-        return scorers
+        self.scorers = get_scorers(metrics_names, **kwargs)
 
     def score(self, dataset):
         scores = {}

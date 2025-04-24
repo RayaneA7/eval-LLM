@@ -11,7 +11,7 @@ pip install evaluate numpy torch
 ## Usage example
 
 ```python
-from your_module import CollectionScoreEvaluator
+from .collectionEvaluator import CollectionScoreEvaluator
 
 # Your test dataset (prediction-reference pairs)
 dataset = {
@@ -35,7 +35,7 @@ scores = evaluator.score(dataset)
 print("All Scores:\n", scores)
 
 # Compute mean score for each metric
-means = evaluator.compute_mean()
+means = evaluator.compute_mean(scores)
 print("\nMean Scores:\n", means)
 
 ```
@@ -54,7 +54,7 @@ class DummyScoreEvaluator(BaseScoreEvaluator):
         return {"dummy": self.scores}
 ```
 
-Then register it in `CollectionScoreEvaluator.get_scorers()`:
+Then register it in `utils/get_scorers()`:
 
 ```python
 elif metric == "dummy":
